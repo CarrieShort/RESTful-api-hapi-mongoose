@@ -4,16 +4,18 @@ module.exports = [{
   method: 'GET',
   path: '/api/crew',
   handler: (request, reply) => {
-    reply({
-      statusCode: 200,
-      message: 'All Crew Members',
-      data: [{
-        name: 'Malcolm Reynolds',
-        rank: 'Captain'
-      }, {
-        name: 'Kaywinnet Lee Frye',
-        rank: 'Engineer'
-      }]
+    Crew.find({}, (err, data) => {
+      if (err) {
+        return reply({
+          statusCode: 503,
+          message: err
+        });
+      }
+      reply({
+        statusCode: 200,
+        message: 'Crew Members',
+        crewMembers: data
+      });
     });
   }
 }, {
@@ -23,17 +25,17 @@ module.exports = [{
     var crew = new Crew(request.payload);
     crew.save((err, data) => {
       if (err) {
-        reply({
+        return reply({
           statusCode: 503,
           message: err
         });
-      } else {
-        reply({
-          statusCode: 201,
-          message: 'Crew member added',
-          crewMember: data
-        });
       }
+      reply({
+        statusCode: 200,
+        message: 'Crew member added',
+        crewMember: data
+      });
+
     });
   }
 }];
