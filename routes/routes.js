@@ -13,7 +13,7 @@ module.exports = [{
       }
       reply({
         statusCode: 200,
-        message: 'Crew Members',
+        message: 'Crew members',
         crewMembers: data
       });
     });
@@ -37,5 +37,26 @@ module.exports = [{
       });
 
     });
+  }
+}, {
+  method: 'PUT',
+  path: '/api/crew/{id}',
+  handler: (request, reply) => {
+    var crewData = request.payload;
+    delete crewData._id;
+    Crew.update({ _id: request.params.id }, request.payload, (err, data) => {
+      if (err) {
+        return reply({
+          statusCode: 503,
+          message: err
+        });
+      }
+      reply({
+        statusCode: 200,
+        message: 'Crew member updated',
+        crewMember: data
+      });
+    });
+
   }
 }];

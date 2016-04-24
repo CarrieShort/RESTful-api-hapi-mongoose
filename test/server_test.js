@@ -75,18 +75,34 @@ describe('methods that require data', () => {
       done();
     });
   });
-  it('should return a list of all crew on GET method', (done) => {
+  it('should return a list of all crew on GET', (done) => {
     request('localhost:' + port)
     .get('/api/crew')
     .end((err, res) => {
       expect(err).to.eql(null);
       expect(res).to.have.status(200);
-      expect(res.body.message).to.eql('Crew Members');
+      expect(res.body.message).to.eql('Crew members');
       expect(Array.isArray(res.body.crewMembers)).to.eql(true);
       expect(res.body.crewMembers.length).to.eql(1);
       expect(res.body.crewMembers[0].name).to.eql('Hoban Washburne');
       expect(res.body.crewMembers[0].rank).to.eql('Pilot');
       expect(res.body.crewMembers[0].ship).to.eql('Firefly');
+      done();
+    });
+  });
+  it('should update a crew member on PUT', (done) => {
+    request('localhost:' + port)
+    .put('/api/crew/' + this.crew._id)
+    .send({
+      name: 'Wash',
+      rank: 'Best Pilot',
+      ship: 'Serenity'
+    })
+    .end((err, res) => {
+      expect(err).to.eql(null);
+      expect(res).to.have.status(200);
+      expect(res.body.message).to.eql('Crew member updated');
+      expect(res.body.crewMember.nModified).to.eql(1);
       done();
     });
   });
