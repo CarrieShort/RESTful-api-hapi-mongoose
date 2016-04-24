@@ -1,0 +1,28 @@
+{
+  "name": "resful-hapi-api",
+  "version": "1.0.0",
+  "description": "A RESTful api using hapi and mongoose",
+  "main": "server.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CarrieShort/RESTful-api-hapi-mongoose.git"
+  },
+  "author": "Carrie Short",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CarrieShort/RESTful-api-hapi-mongoose/issues"
+  },
+  "homepage": "https://github.com/CarrieShort/RESTful-api-hapi-mongoose#readme",
+  "dependencies": {
+    "hapi": "^13.3.0",
+    "mongoose": "^4.4.13"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^2.0.1",
+    "mocha": "^2.4.5"
+  }
+}
