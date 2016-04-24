@@ -33,7 +33,7 @@ server.route({
   path: '/api/crew',
   handler: (request, reply) => {
     var crew = new Crew(request.payload);
-    crew.save((err) => {
+    crew.save((err, data) => {
       if (err) {
         reply({
           statusCode: 503,
@@ -42,7 +42,8 @@ server.route({
       } else {
         reply({
           statusCode: 201,
-          message: 'Crew member added'
+          message: 'Crew member added',
+          crewMember: data
         });
       }
     });
