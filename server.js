@@ -1,6 +1,9 @@
 const hapi = require('hapi');
-const server = new hapi.Server();
+const server = module.exports = new hapi.Server();
 const PORT = process.env.PORT || 3000;
+const mongoose = require('mongoose');
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/crew_db');
+const Crew = require('./models/crew.js');
 
 server.connection( { port: PORT } );
 
@@ -21,6 +24,27 @@ server.route({
           rank: 'Engineer'
         }
       ]
+    });
+  }
+});
+
+server.route({
+  method: 'POST',
+  path: '/api/crew',
+  handler: (request, reply) => {
+    var crew = new Crew(request.payload);
+    crew.save((err) => {
+      if (err) {
+        reply({
+          statusCode: 503,
+          message: err
+        });
+      } else {
+        reply({
+          statusCode: 201,
+          message: 'Crew member added'
+        });
+      }
     });
   }
 });
