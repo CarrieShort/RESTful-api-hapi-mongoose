@@ -42,3 +42,52 @@ describe('Crew POST method', () => {
     });
   });
 });
+describe('methods that require data', () => {
+  before((done) => {
+    server.start(() => {
+      console.log('Server running at: ', server.info.uri);
+      done();
+    });
+  });
+  after((done) => {
+    mongoose.connection.db.dropDatabase(() => {
+      server.stop(() => {
+        console.log('Server stopped');
+        done();
+      });
+    });
+  });
+  beforeEach((done) => {
+    var crewMember = new Crew({
+      name: 'Hoban Washburne',
+      rank: 'Pilot',
+      ship: 'Firefly'
+    });
+    crewMember.save((err, data) => {
+      if (err) console.log(err);
+      this.crew = data;
+      done();
+    });
+  });
+  afterEach((done) => {
+    this.crew.remove((err) => {
+      if (err) console.log(err);
+      done();
+    });
+  });
+  it('should return a list of all crew on GET method', (done) => {
+    request('localhost:' + port)
+    .get('/api/crew')
+    .end((err, res) => {
+      expect(err).to.eql(null);
+      expect(res).to.have.status(200);
+      expect(res.body.message).to.eql('Crew Members');
+      expect(Array.isArray(res.body.crewMembers)).to.eql(true);
+      expect(res.body.crewMembers.length).to.eql(1);
+      expect(res.body.crewMembers[0].name).to.eql('Hoban Washburne');
+      expect(res.body.crewMembers[0].rank).to.eql('Pilot');
+      expect(res.body.crewMembers[0].ship).to.eql('Firefly');
+      done();
+    });
+  });
+});
