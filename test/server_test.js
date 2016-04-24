@@ -106,4 +106,14 @@ describe('methods that require data', () => {
       done();
     });
   });
+  it('should delete a crew member on DELETE', (done) => {
+    request('localhost:' + port)
+    .delete('/api/crew/' + this.crew._id)
+    .end((err, res) => {
+      expect(err).to.eql(null);
+      expect(res).to.have.status(200);
+      expect(res.body.message).to.eql('Crew member has left the crew');
+      done();
+    });
+  });
 });

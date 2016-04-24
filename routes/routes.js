@@ -59,4 +59,23 @@ module.exports = [{
     });
 
   }
+}, {
+  method: 'DELETE',
+  path: '/api/crew/{id}',
+  handler: (request, reply) => {
+    Crew.findOneAndRemove({ _id: request.params.id }, (err, data) => {
+      if (err) {
+        return reply({
+          statusCode: 503,
+          message: err
+        });
+      }
+      reply({
+        statusCode: 200,
+        message: 'Crew member has left the crew',
+        crewMember: data
+      });
+    });
+
+  }
 }];
