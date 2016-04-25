@@ -4,7 +4,11 @@
   "description": "A RESTful api using hapi and mongoose",
   "main": "server.js",
   "scripts": {
-    "test": "test"
+    "create-db-dir": "node lib/make-directory.js",
+    "start-server": "node server.js",
+    "install": "npm run create-db-dir",
+    "start": "npm run start-server",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
