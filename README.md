@@ -62,7 +62,7 @@ http DELETE localhost:5555/api/crew/571a85774968b5252b83dfd2
 * mongoose
 
 ##To test
-npm test will run mocha. Gulp will lint and run mocha tests.
+You must have done an npm install and started mongod before tests will run. npm test will run mocha. Gulp will lint and run mocha tests.
 ```
 npm test
 gulp
