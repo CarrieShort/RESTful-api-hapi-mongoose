@@ -42,7 +42,7 @@ Update a crew member, replace <id> with a specific crew members id you can see I
 http PUT localhost:5555/api/crew/<id>  name='William Adama' rank='Admiral' ship='Battlestar Galactica'
 ```
 ####DELETE
-Delete politician
+Delete crew member
 ```
 http DELETE localhost:5555/api/crew/<id>
 http DELETE localhost:5555/api/crew/571a85774968b5252b83dfd2
