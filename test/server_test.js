@@ -117,3 +117,30 @@ describe('methods that require data', () => {
     });
   });
 });
+
+describe('404 response', () => {
+  before((done) => {
+    server.start(() => {
+      console.log('Server running at: ', server.info.uri);
+      done();
+    });
+  });
+  after((done) => {
+    mongoose.connection.db.dropDatabase(() => {
+      server.stop(() => {
+        console.log('Server stopped');
+        done();
+      });
+    });
+  });
+  it('should 404 on bad routes', (done) => {
+    request('localhost:' + port)
+    .get('/badroute')
+    .end((err, res) => {
+      expect(err.toString()).to.eql('Error: Not Found');
+      expect(res).to.have.status(404);
+      expect(res.body.error).to.eql('Not Found');
+      done();
+    });
+  });
+});
